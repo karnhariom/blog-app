@@ -1,0 +1,92 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+li{
+    list-style: none;
+}
+
+textarea{
+    resize: none;
+}
+
+.container{
+    max-width: 1500px ;
+    margin: auto;
+}
+
+.sub-title{
+    font-size: 20px;
+    font-weight: 500;
+    margin: 5px 0;
+}
+
+.common-form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.inp-box{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.inp-box input, .inp-box textarea{
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+    outline: none;
+}
+
+.common-form button[type=submit]{
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+    outline: none;
+    width: fit-content;
+}
+
+
+.pg-title{
+    display: flex;
+    padding: 20px;
+}
+
+.cat-container{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+}
+
+.cat-container .add-category{
+    padding: 10px;
+}
+
+.cat-container .all-categories{
+    padding: 10px;
+}
+
+.cat-table{
+    width: 100%;
+}
+
+.cat-table thead th{
+    padding: 5px 10px;
+    background-color: antiquewhite;
+    text-align: start;
+}
+
+.cat-table tbody td{
+    padding: 5px 10px;
+    text-align: start;
+}
+
+.cat-table tbody tr:nth-child(even){
+    background-color: aliceblue;
+}
