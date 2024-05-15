@@ -90,3 +90,8 @@ textarea{
 .cat-table tbody tr:nth-child(even){
     background-color: aliceblue;
 }
+
+.update-category{
+    max-width: 600px;
+    margin: auto;
+}

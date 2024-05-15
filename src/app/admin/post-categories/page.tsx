@@ -1,13 +1,14 @@
 "use client"
 import { useFormik } from 'formik'
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { getCategories } from '../_redux/postApi'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
+import { addCategory, deleteCategory, getCategories } from '../_redux/postApi'
+import Link from 'next/link'
 
 const PostCategory = () => {
 
-    const dispatch : any = useDispatch()
-    const [allCategories, setAllCategories] = useState([])
+    const dispatch: any = useDispatch()
+    const { categories } = useSelector((state: any) => state.posts, shallowEqual)
 
     const initialValues = {
         title: "",
@@ -17,22 +18,17 @@ const PostCategory = () => {
 
     const formik = useFormik({
         initialValues,
-        onSubmit: async (values) => {
-            const data = {
+        onSubmit: async (values, {resetForm}) => {
+            const data: any = {
                 title: values.title,
                 slug: values.slug,
                 description: values.description,
             };
-            console.log("data", data);
-            // const response = await fetch("/api/admin/add-category", {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify(data)
-            // });
-            // return response.json();
-            const response = dispatch(getCategories(data))
+            const res = await dispatch(addCategory(data))
+            console.log('add res: ', res);
+            if(!res.error){
+                resetForm()
+            }
         }
     });
 
@@ -46,34 +42,22 @@ const PostCategory = () => {
         formik.setFieldValue('slug', updateSlug(e.target.value));
     };
 
-    const fetchCategories = async () => {
-        await fetch("/api/admin/get-category")
-            .then((response) => response.json())
-            .then((data) => {
-                setAllCategories(data.categories);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-    }
-
     useEffect(() => {
-        fetchCategories()
+        ; (
+            async () => {
+                const res = await dispatch(getCategories())
+            }
+        )()
     }, [])
 
-    const deleteCategory = async (id: any) => {
+
+    const deletePostCategory = async (id: any) => {
         const data = {
             categoryId: id
         }
         console.log("data", data)
-        const response = await fetch("/api/admin/delete-category", {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-        return response.json();
+        const response = await dispatch(deleteCategory(data))
+        console.log('response: ', response);
     }
 
     return (
@@ -134,15 +118,15 @@ const PostCategory = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {allCategories && allCategories.map((item: any) => {
+                            {categories && categories.map((item: any) => {
                                 return (
                                     <tr key={item._id}>
                                         <td>{item.title}</td>
                                         <td>{item.description || "-"}</td>
                                         <td>{item.slug}</td>
                                         <td>
-                                            <button onClick={() => deleteCategory(item._id)}>Delete</button>
-                                            <button>Edit</button>
+                                            <button onClick={() => deletePostCategory(item._id)}>Delete</button>
+                                            <button> <Link href={`/admin/post-categories/${item._id}`}> Edit</Link></button>
                                             <button>View</button>
                                         </td>
                                     </tr>

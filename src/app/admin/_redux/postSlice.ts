@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getCategories } from "./postApi";
 
 const postSlice = createSlice({
-    name: "admin",
+    name: "posts",
     initialState: {
         isLoading: false,
         posts: null,
@@ -15,7 +16,17 @@ const postSlice = createSlice({
         }),
     },
     extraReducers: (builder) => {
-
+        builder.addCase(getCategories.pending, (state) =>{
+            state.isLoading = true
+        }),
+        builder.addCase(getCategories.fulfilled, (state, action) =>{
+            console.log('action: ', action.payload);
+            state.isLoading = false
+            state.categories = action.payload
+        }),
+        builder.addCase(getCategories.rejected, (state) =>{
+            state.isLoading = false
+        })
     }
 })
 

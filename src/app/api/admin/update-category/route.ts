@@ -4,20 +4,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 connect()
 
-export async function GET(request: NextRequest, response: NextResponse) {
+export async function PATCH(request: NextRequest, response: NextResponse) {
     try {
-        const categories = await Category.find({})
-
-        return NextResponse.json({
-            status: 200,
-            categories
-        })
-
+        const reqBody = await request.json()
+        const { title, slug, description, id } = reqBody
     } catch (error: any) {
         return NextResponse.json({
             status: 500,
             message: error.message
         })
     }
-
 }

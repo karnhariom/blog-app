@@ -14,6 +14,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
         if (category) {
             return NextResponse.json({
                 msg: "Category already exists",
+                statue: 400,
             })
         }
 

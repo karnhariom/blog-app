@@ -4,7 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 connect()
 
-export async function DELETE(request: NextRequest, response: NextResponse) {
+export async function GET(request: NextRequest, response: NextResponse) {
+    console.log("ujasdoinon")
     try {
         const reqBody = await request.json()
         const { categoryId } = reqBody
@@ -16,7 +17,7 @@ export async function DELETE(request: NextRequest, response: NextResponse) {
                 msg: "Category not found"
             })
         }
-         await Category.findByIdAndDelete(categoryId);
+        //  await Category.findByIdAndDelete(categoryId);
         return NextResponse.json({
             status: 200,
             msg: "Category deleted successfully",
